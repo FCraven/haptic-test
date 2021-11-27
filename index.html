@@ -30,10 +30,16 @@
     const intervalSlider = document.getElementById('interval')
     const onButton = document.getElementById('on-button');
     const offButton = document.getElementById('off-button');
-    let durationValue;
-    let intervalValue;
+    let durationValue = durationSlider.value;
+    let intervalValue= intervalSlider;
     let vibrateDuration;
     let vibrateInterval;
+    let durationAdjusted = durationValue * 100;
+    let intervalAdjusted = intervalValue * 100;
+
+    function startVibrate(duration) {
+        navigator.vibrate(duration);
+    }
 
     function stopVibrate() {
         if(vibrateInterval) clearInterval(vibrateInterval);
@@ -49,17 +55,17 @@
     durationSlider.addEventListener('change', (evt)=> {
       durationValue = evt.target.value;
       console.log('duration VALUE =->', durationValue)
-      startPersistentVibration(durationValue, intervalValue)
+      startPersistentVibrate(durationAdjusted, intervalAdjusted)
     })
 
     intervalSlider.addEventListener('change', (evt)=> {
       intervalValue = evt.target.value;
       console.log('interval VALUE =->', intervalValue)
-      startPersistentVibrate(durationValue, intervalValue)
+      startPersistentVibrate(durationAdjusted, intervalAdjusted)
     })
 
     onButton.addEventListener('click', ()=> {
-      startPersistentVibrate(durationValue, intervalValue)
+      startPersistentVibrate(durationAdjusted, intervalAdjusted)
     })
 
     offButton.addEventListener('click', (evt)=> stopVibrate)
