@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haptic Test</title>
+</head>
+<body>
+  <div>
+
+    <input type="range" id="duration" name="duration"
+           min="1" max="10" value="5" step="1">
+    <label for="duration">Duration</label>
+
+    <input type="range" id="interval" name="interval"
+    min="1" max="10" value="5" step="1">
+    <label for="interval">Interval</label>
+
+  </div>
+
+  <div>
+    <button id='on-button' type='button'>On</button>
+    <button id='off-button' type='button'>Off</button>
+  </div>
+
+  <script>
+
+    const durationSlider = document.getElementById('duration');
+    const intervalSlider = document.getElementById('interval')
+    const onButton = document.getElementById('on-button');
+    const offButton = document.getElemenById('off-button');
+    let durationValue;
+    let intervalValue;
+    let vibrateDuration;
+    let vibrateInterval;
+
+    function stopVibrate() {
+        if(vibrateInterval) clearInterval(vibrateInterval);
+        navigator.vibrate(0);
+    }
+
+    function startPersistentVibrate(duration, interval) {
+        vibrateInterval = setInterval(function() {
+            startVibrate(duration);
+        }, interval);
+    }
+
+    durationSlider.addEventListener('change', (evt)=> {
+      durationValue = evt.target.value;
+      console.log('duration VALUE =->', durationValue)
+      startPersistentVibration(durationValue, intervalValue)
+    })
+
+    intervalSlider.addEventListener('change', (evt)=> {
+      intervalValue = evt.target.value;
+      console.log('interval VALUE =->', intervalValue)
+      startPersistentVibrate(durationValue, intervalValue)
+    })
+
+    onButton.addEventListener('click', ()=> {
+      startPersistentInterval(durationValue, intervalValue)
+    })
+
+    offButton.addEventListener('click', (evt)=> stopVibrate)
+
+  </script>
+
+</body>
+</html>
